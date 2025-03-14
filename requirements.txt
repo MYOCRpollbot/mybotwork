@@ -1,0 +1,8 @@
+python-telegram-bot==20.0
+pytesseract
+pdf2image
+Pillow
+opencv-python
+numpy
+pdfminer.six
+python-dotenv
