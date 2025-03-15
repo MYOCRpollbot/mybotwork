@@ -1,0 +1,16 @@
+name: Scheduled Koyeb Redeployment
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Koyeb Redeployment
+        uses: koyeb/action-git-deploy@v1
+        with:
+          api_token: ${{ secrets.KOYEB_API_TOKEN }}
+          app_name: hilarious-mirabelle
+          service_name: mybotwork
