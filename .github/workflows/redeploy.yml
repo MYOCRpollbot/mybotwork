@@ -2,7 +2,7 @@ name: Koyeb Redeployment
 
 on:
   schedule:
-    - cron: '*/20 * * * *'  # Runs every 20 minutes
+    - cron: '*/15 * * * *'  # Runs every 15 minutes
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
@@ -21,5 +21,6 @@ jobs:
         run: koyeb version
 
       - name: Deploy to Koyeb with Skip Build
+        continue-on-error: true  # Prevents workflow failure on redeploy errors
         run: |
-          koyeb service redeploy hilarious-mirabelle/mybotwork --skip-build
+          koyeb service redeploy hilarious-mirabelle/mybotwork --skip-build || echo "Redeployment skipped, possibly due to rate limit. Will retry in next run."
