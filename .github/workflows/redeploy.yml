@@ -2,15 +2,22 @@ name: Scheduled Koyeb Redeployment
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/30 * * * *'  # Runs every 30 minutes
 
 jobs:
   redeploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Koyeb Redeployment
-        uses: koyeb/action-git-deploy@v1
-        with:
-          api_token: ${{ secrets.KOYEB_API_TOKEN }}
-          app_name: hilarious-mirabelle
-          service_name: mybotwork
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Koyeb CLI
+        run: |
+          curl -fsSL https://get.koyeb.com/install.sh | bash
+          echo "$HOME/.koyeb/bin" >> $GITHUB_PATH
+
+      - name: Deploy to Koyeb
+        env:
+          KOYEB_API_TOKEN: ${{ secrets.KOYEB_API_TOKEN }}
+        run: |
+          koyeb service redeploy hilarious-mirabelle/mybotwork
