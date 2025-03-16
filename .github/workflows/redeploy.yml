@@ -16,6 +16,10 @@ jobs:
         run: |
           curl -fsSL https://get.koyeb.com/install.sh | bash
           echo "$HOME/.koyeb/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.koyeb/bin:$PATH"
+
+      - name: Verify Koyeb CLI Installation
+        run: koyeb --version
 
       - name: Deploy to Koyeb
         env:
