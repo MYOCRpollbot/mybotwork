@@ -2,8 +2,8 @@ name: Koyeb Redeployment
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
-  workflow_dispatch:
+    - cron: '*/30 * * * *'  # Runs every 30 minutes
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   redeploy:
@@ -18,13 +18,7 @@ jobs:
           api_token: "${{ secrets.KOYEB_API_TOKEN }}"
 
       - name: Verify Koyeb CLI Installation
-        run: koyeb --version
-
-      - name: Check CLI Path
-        run: which koyeb
-
-      - name: List Koyeb Services
-        run: koyeb service list
+        run: koyeb version
 
       - name: Deploy to Koyeb
         run: |
