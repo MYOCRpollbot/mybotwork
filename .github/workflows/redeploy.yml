@@ -1,8 +1,9 @@
-name: Scheduled Koyeb Redeployment
+name: Koyeb Redeployment
 
 on:
   schedule:
     - cron: '*/30 * * * *'  # Runs every 30 minutes
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   redeploy:
