@@ -2,8 +2,8 @@ name: Koyeb Redeployment
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Runs every 30 minutes
-  workflow_dispatch:  # Allows manual triggering
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
 
 jobs:
   redeploy:
@@ -12,17 +12,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Install Koyeb CLI
-        run: |
-          curl -fsSL https://get.koyeb.com/install.sh | bash
-          echo "$HOME/.koyeb/bin" >> $GITHUB_PATH
-          export PATH="$HOME/.koyeb/bin:$PATH"
+      - name: Install and Configure Koyeb CLI
+        uses: koyeb-community/koyeb-actions@v2
+        with:
+          api_token: "${{ secrets.KOYEB_API_TOKEN }}"
 
       - name: Verify Koyeb CLI Installation
         run: koyeb --version
 
+      - name: Check CLI Path
+        run: which koyeb
+
+      - name: List Koyeb Services
+        run: koyeb service list
+
       - name: Deploy to Koyeb
-        env:
-          KOYEB_API_TOKEN: ${{ secrets.KOYEB_API_TOKEN }}
         run: |
           koyeb service redeploy hilarious-mirabelle/mybotwork
