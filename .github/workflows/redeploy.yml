@@ -2,7 +2,7 @@ name: Koyeb Redeployment
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Runs every 30 minutes
+    - cron: '*/20 * * * *'  # Runs every 20 minutes
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
@@ -20,6 +20,6 @@ jobs:
       - name: Verify Koyeb CLI Installation
         run: koyeb version
 
-      - name: Deploy to Koyeb
+      - name: Deploy to Koyeb with Skip Build
         run: |
-          koyeb service redeploy hilarious-mirabelle/mybotwork
+          koyeb service redeploy hilarious-mirabelle/mybotwork --skip-build
