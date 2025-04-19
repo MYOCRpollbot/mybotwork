@@ -23,4 +23,4 @@ jobs:
       - name: Deploy to Koyeb with Skip Build
         continue-on-error: true  # Prevents workflow failure on redeploy errors
         run: |
-          koyeb service redeploy separate-salli/amadrabe64-d632c2a0 --skip-build || echo "Redeployment skipped, possibly due to rate limit. Will retry in next run."
+          koyeb service redeploy 149b127e-403f-4e54-996d-76466ce51cd7 --skip-build || echo "Redeployment skipped, possibly due to rate limit. Will retry in next run."
